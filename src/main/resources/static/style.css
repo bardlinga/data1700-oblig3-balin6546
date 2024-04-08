@@ -2,7 +2,7 @@ body {
     line-height: 1.2;
 }
 
-label,select {
+label, select {
     margin-right: 5px;
 }
 
@@ -17,6 +17,7 @@ label,select {
 #personalia input {
     width: 160px;
 }
+
 /*
 #billettListe th{
     min-width: 80px;

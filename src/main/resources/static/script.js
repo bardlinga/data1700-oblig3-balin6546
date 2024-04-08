@@ -1,15 +1,17 @@
-$(document).ready(function(){
+$(document).ready(function () {
     hentAlleFilmer();
 });
+
 function hentAlleFilmer() {
-    $.get("/hentFilmListe", function(filmer) {
-        populerFilmDropdown(filmer);
+    $.get("/hentFilmListe", function (filmer) {
+        opprettFilmDropdown(filmer);
     });
 }
-function populerFilmDropdown(filmer){
+
+function opprettFilmDropdown(filmer) {
     let ut = "<select id=\"film\" name=\"film\">";
-    for(const film of filmer){
-        ut+="<option value='"+film.tittel+"'>"+film.tittel+"</option>";
+    for (const film of filmer) {
+        ut += "<option value='" + film.tittel + "'>" + film.tittel + "</option>";
     }
     ut += "</select>"
     $("#film").html(ut);
@@ -26,10 +28,10 @@ const feilmelding = {
 }
 
 function toggleFeilmelding(id, ugyldigInput, feilmelding) {
-    if (ugyldigInput){
-        $('#'+id+'UgyldigMelding').html(feilmelding);
+    if (ugyldigInput) {
+        $('#' + id + 'UgyldigMelding').html(feilmelding);
     } else {
-        $('#'+id+'UgyldigMelding').html("");
+        $('#' + id + 'UgyldigMelding').html("");
     }
 }
 
@@ -51,19 +53,33 @@ function validerInput(id, regExp, feilmelding) {
 }
 
 $(document).ready(function () {
-    $('#film').change(function() {validerInput("film", regExp.film, feilmelding.film)});
-    $('#antall').change(function() {validerInput("antall", regExp.antall, feilmelding.antall)});
-    $('#fornavn').change(function(){validerInput("fornavn", regExp.navn, feilmelding.navn)});
-    $('#etternavn').change(function(){validerInput("etternavn", regExp.navn, feilmelding.navn)});
-    $('#telefonnr').change(function(){validerInput("telefonnr", regExp.telefonnr, feilmelding.telefonnr)});
-    $('#epost').change(function(){validerInput("epost", regExp.epost, feilmelding.epost)});
+    $('#film').change(function () {
+        validerInput("film", regExp.film, feilmelding.film)
+    });
+    $('#antall').change(function () {
+        validerInput("antall", regExp.antall, feilmelding.antall)
+    });
+    $('#fornavn').change(function () {
+        validerInput("fornavn", regExp.navn, feilmelding.navn)
+    });
+    $('#etternavn').change(function () {
+        validerInput("etternavn", regExp.navn, feilmelding.navn)
+    });
+    $('#telefonnr').change(function () {
+        validerInput("telefonnr", regExp.telefonnr, feilmelding.telefonnr)
+    });
+    $('#epost').change(function () {
+        validerInput("epost", regExp.epost, feilmelding.epost)
+    });
 
-    $('#fyllSkjemaKnapp').click(function(){fyllSkjema()});
+    $('#fyllSkjemaKnapp').click(function () {
+        fyllSkjema()
+    });
 });
 
 // ticket creation functions ----------------------------------------------------------
 
-function lagNyBillett(){
+function lagNyBillett() {
     return {
         film: $('#film').val(),
         antall: $('#antall').val(),
@@ -86,12 +102,13 @@ function validerSkjema() {
     return !inputSjekkArray.includes(false);
 }
 
-function kjopBillett(){
-    if (validerSkjema()){
+function kjopBillett() {
+    if (validerSkjema()) {
         let billett = lagNyBillett();
-        $.post("/lagreBillett", billett, function(){
-            printBillettArray()
-            ;}
+        $.post("/lagreBillett", billett, function () {
+                printBillettArray()
+                ;
+            }
         );
         document.getElementById('bestillingsskjema').reset();
     }
@@ -105,7 +122,7 @@ function slettAlleBilletter() {
 // ticket array display functions -----------------------------------------------------------------
 
 function printBillettArray() {
-    $.get("/hentAlleBilletter", function(billettArray){
+    $.get("/hentAlleBilletter", function (billettArray) {
         let printTable = (
             "<tr>" +
             "<th>Film</th><th>Antall</th>" +
@@ -116,9 +133,9 @@ function printBillettArray() {
         for (const i of billettArray) {
             printTable += (
                 "<tr>" +
-                "<td>"+i.film+"</td><td>"+i.antall+"</td>" +
-                "<td>"+i.fornavn+"</td><td>"+i.etternavn+"</td>" +
-                "<td>"+i.telefonnr+"</td><td>"+i.epost+"</td>" +
+                "<td>" + i.film + "</td><td>" + i.antall + "</td>" +
+                "<td>" + i.fornavn + "</td><td>" + i.etternavn + "</td>" +
+                "<td>" + i.telefonnr + "</td><td>" + i.epost + "</td>" +
                 "</tr>"
             );
         }
@@ -126,7 +143,7 @@ function printBillettArray() {
     })
 }
 
-function fyllSkjema(){
+function fyllSkjema() {
     $('#film').val("Lord of the Shrimp");
     $('#antall').val("1");
     $('#fornavn').val("abc");
