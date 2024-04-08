@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+    <title>data1700-oblig2-balin6546</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script type="text/javascript" src="script.js"></script>
+</head>
+
+<body>
+
+<div class="container-fluid">
+    <div class="jumbotron">
+        <h1>Bestilling av kinobilletter</h1>
+        <p class="text-muted">Her kan du bestille kinobilletter</p>
+    </div>
+
+    <form id="bestillingsskjema">
+        <label for="film"><span class="glyphicon glyphicon-film"></span> Velg film: </label>
+        <select id="film" name="film">
+        </select>
+        <label for="film" class="errorMessage" id="filmUgyldigMelding"></label>
+        <br><br>
+
+        <label for="antall">Antall: </label>
+        <input type="number" id="antall" name="antall" min="1" max="99">
+        <label for="antall" class="errorMessage" id="antallUgyldigMelding"></label>
+        <br><br>
+
+        <table class="table-condensed" id="personalia">
+            <tr>
+                <td>
+                    <label for="fornavn">Fornavn: </label>
+                </td>
+                <td>
+                    <input type="text" id="fornavn" name="fornavn">
+                </td>
+                <td>
+                    <label for="fornavn" class="errorMessage" id="fornavnUgyldigMelding"></label>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="etternavn">Etternavn: </label>
+                </td>
+                <td>
+                    <input type="text" id="etternavn" name="etternavn">
+                </td>
+                <td>
+                    <label for="etternavn" class="errorMessage" id="etternavnUgyldigMelding"></label>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="telefonnr">Telefonnr: </label>
+                </td>
+                <td>
+                    <input type="tel" id="telefonnr" name="telefonnr">
+                </td>
+                <td>
+                    <label for="telefonnr" class="errorMessage" id="telefonnrUgyldigMelding"></label>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="epost">Epost: </label>
+                </td>
+                <td>
+                    <input type="email" id="epost" name="epost">
+                </td>
+                <td>
+                    <label for="epost" class="errorMessage" id="epostUgyldigMelding"></label>
+                </td>
+            </tr>
+        </table>
+        <br>
+        <button type="button" onClick="kjopBillett()" id="kjopKnapp">Kjøp billett</button>
+    </form>
+    <button type="button" id="fyllSkjemaKnapp">Fyll skjema</button>
+
+    <h2>Alle billetter</h2>
+
+    <table id="billettListe" class="table-condensed"></table> <!-- table is filled by script -->
+
+    <button onclick="slettAlleBilletter()"><span class="glyphicon glyphicon-trash"></span> Slett alle billetter</button>
+
+</div>
+</body>
+</html>
