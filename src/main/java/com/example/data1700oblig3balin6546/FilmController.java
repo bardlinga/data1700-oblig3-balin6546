@@ -10,8 +10,6 @@ import java.util.List;
 
 public class FilmController {
 
-    public List<Film> filmListe = new ArrayList<>();
-
     Film placeholder = new Film("","",0);
     Film lordOfTheShrimp = new Film("Lord of the Shrimp", "Fantasy", 2001);
     Film thereWillBeShrimp = new Film("There Will Be Shrimp", "Western",2007);
@@ -20,6 +18,7 @@ public class FilmController {
 
     @GetMapping("/hentFilmListe")
     public List<Film> hentFilmListe() {
+        List<Film> filmListe = new ArrayList<>();
         filmListe.add(placeholder);
         filmListe.add(lordOfTheShrimp);
         filmListe.add(thereWillBeShrimp);

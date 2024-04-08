@@ -7,10 +7,11 @@ function hentAlleFilmer() {
     });
 }
 function populerFilmDropdown(filmer){
-    let ut = "";
+    let ut = "<select id=\"film\" name=\"film\">";
     for(const film of filmer){
         ut+="<option value='"+film.tittel+"'>"+film.tittel+"</option>";
     }
+    ut += "</select>"
     $("#film").html(ut);
 }
 
