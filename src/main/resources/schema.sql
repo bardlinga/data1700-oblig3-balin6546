@@ -1,4 +1,4 @@
-drop table if exists Billett;
+drop table if exists billett;
 
 create table billett
 (
