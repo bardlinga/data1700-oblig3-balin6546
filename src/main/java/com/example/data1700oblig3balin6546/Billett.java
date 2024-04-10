@@ -10,6 +10,7 @@ import lombok.Setter;
 @NoArgsConstructor
 
 public class Billett {
+    private @Setter int billettId;
     private @Setter String film;
     private @Setter int antall;
     private @Setter String fornavn;

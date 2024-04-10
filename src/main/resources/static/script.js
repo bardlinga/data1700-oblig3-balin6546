@@ -106,8 +106,7 @@ function kjopBillett() {
     if (validerSkjema()) {
         let billett = lagNyBillett();
         $.post("/lagreBillett", billett, function () {
-                printBillettArray()
-                ;
+                printBillettArray();
             }
         );
         document.getElementById('bestillingsskjema').reset();
