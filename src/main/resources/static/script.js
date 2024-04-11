@@ -1,5 +1,6 @@
 $(document).ready(function () {
     hentAlleFilmer();
+    printBillettArray();
 });
 
 function hentAlleFilmer() {
@@ -27,8 +28,8 @@ const feilmelding = {
     epost: "Du må skrive inn en gyldig epost-adresse"
 }
 
-function toggleFeilmelding(id, ugyldigInput, feilmelding) {
-    if (ugyldigInput) {
+function toggleFeilmelding(id, inputGyldig, feilmelding) {
+    if (!inputGyldig) {
         $('#' + id + 'UgyldigMelding').html(feilmelding);
     } else {
         $('#' + id + 'UgyldigMelding').html("");
@@ -53,7 +54,7 @@ function validerInput(id, regExp, feilmelding) {
         input = document.getElementById(id).value;
     }
     let inputGyldig = regExp.test(input);
-    toggleFeilmelding(id, !inputGyldig, feilmelding);
+    toggleFeilmelding(id, inputGyldig, feilmelding);
     return inputGyldig;
 }
 
@@ -110,7 +111,6 @@ function validerSkjema() {
 function kjopBillett() {
     if (validerSkjema()) {
         let billett = lagNyBillett();
-        console.log(billett);
         $.post("/lagreBillett", billett, function () {
                 printBillettArray();
             }
@@ -150,7 +150,6 @@ function printBillettArray() {
 
 function fyllSkjema() {
     $('#film').val("Lord of the Shrimp");
-    $('#film').html("Lord of the Shrimp");
     $('#antall').val("1");
     $('#fornavn').val("abc");
     $('#etternavn').val("def");

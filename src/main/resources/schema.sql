@@ -11,3 +11,14 @@ create table billett
     epost     varchar(255)       not null,
     primary key (billettId)
 );
+
+drop table if exists film;
+
+create table film
+(
+    filmId  int auto_increment not null,
+    tittel  varchar(255),
+    sjanger varchar(255),
+    prodAar int,
+    primary key (filmId)
+)
