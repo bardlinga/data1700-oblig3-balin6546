@@ -46,7 +46,12 @@ const regExp = {
 }
 
 function validerInput(id, regExp, feilmelding) {
-    let input = document.getElementById(id).value;
+    let input;
+    if(id === "film"){
+        input = $('#film').find("option:selected").val();
+    } else {
+        input = document.getElementById(id).value;
+    }
     let inputGyldig = regExp.test(input);
     toggleFeilmelding(id, !inputGyldig, feilmelding);
     return inputGyldig;
@@ -81,7 +86,7 @@ $(document).ready(function () {
 
 function lagNyBillett() {
     return {
-        film: $('#film').val(),
+        film: $('#film').find("option:selected").val(),
         antall: $('#antall').val(),
         fornavn: $('#fornavn').val(),
         etternavn: $('#etternavn').val(),
@@ -105,6 +110,7 @@ function validerSkjema() {
 function kjopBillett() {
     if (validerSkjema()) {
         let billett = lagNyBillett();
+        console.log(billett);
         $.post("/lagreBillett", billett, function () {
                 printBillettArray();
             }
@@ -144,6 +150,7 @@ function printBillettArray() {
 
 function fyllSkjema() {
     $('#film').val("Lord of the Shrimp");
+    $('#film').html("Lord of the Shrimp");
     $('#antall').val("1");
     $('#fornavn').val("abc");
     $('#etternavn').val("def");
