@@ -1,9 +1,7 @@
 package com.example.data1700oblig3balin6546;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -27,5 +25,10 @@ public class BillettController {
     @PostMapping("/slettAlleBilletter")
     public void slettAlleBilletter() {
         rep.slettAlleBilletter();
+    }
+
+    @DeleteMapping("/slettBillett")
+    public void slettBillett(int billettId) {
+        rep.slettBillett(billettId);
     }
 }

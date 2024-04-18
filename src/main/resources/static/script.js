@@ -120,8 +120,20 @@ function kjopBillett() {
 }
 
 function slettAlleBilletter() {
-    $.post("/slettAlleBilletter");
-    printBillettArray();
+    $.post("slettAlleBilletter", function (){
+        printBillettArray();
+    });
+}
+
+function slettBillett(billettId) {
+    $.ajax({
+        url : "/slettBillett",
+        type : "DELETE",
+        data: { billettId: billettId},
+        success : function (){
+            printBillettArray();
+        }
+    })
 }
 
 // ticket array display functions -----------------------------------------------------------------
@@ -141,6 +153,7 @@ function printBillettArray() {
                 "<td>" + i.film + "</td><td>" + i.antall + "</td>" +
                 "<td>" + i.fornavn + "</td><td>" + i.etternavn + "</td>" +
                 "<td>" + i.telefonnr + "</td><td>" + i.epost + "</td>" +
+                "<td> <button onClick='slettBillett("+ i.billettId +")'>Slett Billett</button></td>" +
                 "</tr>"
             );
         }
