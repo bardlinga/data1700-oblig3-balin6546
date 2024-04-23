@@ -17,9 +17,19 @@ public class BillettController {
         rep.lagreBillett(innBillett);
     }
 
+    @PostMapping("/oppdaterBillett")
+    public void oppdaterBillett(@RequestParam("billettId") int billettId, Billett innBillett) {
+        rep.oppdaterBillett(billettId, innBillett);
+    }
+
     @GetMapping("/hentAlleBilletter")
     public List<Billett> hentAlleBilletter() {
         return rep.hentAlleBilletter();
+    }
+
+    @GetMapping("/hentBillett")
+    public Billett hentBillett(int billettId) {
+        return rep.hentBillett(billettId);
     }
 
     @PostMapping("/slettAlleBilletter")

@@ -18,4 +18,10 @@ public class FilmRepository {
         List<Film> filmListe = db.query(sql, new BeanPropertyRowMapper<>(Film.class));
         return filmListe;
     }
+
+    public String hentFilmTittel(int filmId){
+        String sql = "select tittel from film where filmId = " + filmId;
+        Film film = db.queryForObject(sql, new BeanPropertyRowMapper<>(Film.class));
+        return film.getTittel();
+    }
 }

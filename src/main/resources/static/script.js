@@ -10,12 +10,18 @@ function hentAlleFilmer() {
 }
 
 function opprettFilmDropdown(filmer) {
-    let ut = "<select id=\"film\" name=\"film\">";
+    let ut = "<select id=\"filmSelect\" name=\"film\">";
     for (const film of filmer) {
-        ut += "<option value='" + film.tittel + "'>" + film.tittel + "</option>";
+        ut += "<option value='" + film.filmId + "'>" + film.tittel + "</option>";
     }
     ut += "</select>"
     $("#film").html(ut);
+}
+
+function hentFilmTittel(filmId) {
+    return $.get("/hentFilmTittelById?filmId=" + filmId, function (filmTittel) {
+        return filmTittel;
+    })
 }
 
 // error message functions ------------------------------------------------------------------------
@@ -49,7 +55,7 @@ const regExp = {
 function validerInput(id, regExp, feilmelding) {
     let input;
     if(id === "film"){
-        input = $('#film').find("option:selected").val();
+        input = $('#filmSelect').find("option:selected").text();
     } else {
         input = document.getElementById(id).value;
     }
@@ -59,7 +65,7 @@ function validerInput(id, regExp, feilmelding) {
 }
 
 $(document).ready(function () {
-    $('#film').change(function () {
+    $('#filmSelect').change(function () {
         validerInput("film", regExp.film, feilmelding.film)
     });
     $('#antall').change(function () {
@@ -87,7 +93,7 @@ $(document).ready(function () {
 
 function lagNyBillett() {
     return {
-        film: $('#film').find("option:selected").val(),
+        film: $('#filmSelect').val(),
         antall: $('#antall').val(),
         fornavn: $('#fornavn').val(),
         etternavn: $('#etternavn').val(),
@@ -112,11 +118,28 @@ function kjopBillett() {
     if (validerSkjema()) {
         let billett = lagNyBillett();
         $.post("/lagreBillett", billett, function () {
-                printBillettArray();
-            }
-        );
+            printBillettArray();
+        });
         document.getElementById('bestillingsskjema').reset();
     }
+}
+
+function lagreEndretBillett(billettId) {
+    if (validerSkjema()) {
+        let billett = lagNyBillett();
+        $.post("/oppdaterBillett?billettId=" + billettId, billett, function () {
+            printBillettArray();
+        });
+        document.getElementById('bestillingsskjema').reset();
+        document.getElementById('kjopKnapp').removeAttribute("disabled");
+        $('#oppdaterKnapp').html("");
+    }
+}
+
+function avbrytBillettEndring() {
+    document.getElementById('bestillingsskjema').reset();
+    document.getElementById('kjopKnapp').removeAttribute("disabled");
+    $('#oppdaterKnapp').html("");
 }
 
 function slettAlleBilletter() {
@@ -129,9 +152,30 @@ function slettBillett(billettId) {
     $.ajax({
         url : "/slettBillett",
         type : "DELETE",
-        data: { billettId: billettId},
+        data: { billettId: billettId },
         success : function (){
             printBillettArray();
+        }
+    })
+}
+
+function endreBillett(billettId) {
+    $.ajax({
+        url : "/hentBillett",
+        type : "GET",
+        data: { billettId: billettId },
+        success : function (data) {
+            $('#filmSelect').val(data.film);
+            $('#antall').val(data.antall);
+            $('#fornavn').val(data.fornavn);
+            $('#etternavn').val(data.etternavn);
+            $('#telefonnr').val(data.telefonnr);
+            $('#epost').val(data.epost);
+
+            document.getElementById('kjopKnapp').setAttribute('disabled','');
+            $('#oppdaterKnapp').html(
+                "<button onClick='lagreEndretBillett("+data.billettId+")'>Lagre endret billett</button>" +
+                "<button onClick='avbrytBillettEndring()'>Avbryt billettendring</button>");
         }
     })
 }
@@ -139,21 +183,25 @@ function slettBillett(billettId) {
 // ticket array display functions -----------------------------------------------------------------
 
 function printBillettArray() {
-    $.get("/hentAlleBilletter", function (billettArray) {
+    $.get("/hentAlleBilletter", async function (billettArray) {
         let printTable = (
             "<tr>" +
             "<th>Film</th><th>Antall</th>" +
             "<th>Navn</th><th>Etternavn</th>" +
             "<th>Telefonnr</th><th>Epost</th>" +
+            "<th>Valg</th>" +
             "</tr>"
         );
         for (const i of billettArray) {
             printTable += (
                 "<tr>" +
-                "<td>" + i.film + "</td><td>" + i.antall + "</td>" +
+                "<td>" + await hentFilmTittel(i.film) + "</td><td>" + i.antall + "</td>" +
                 "<td>" + i.fornavn + "</td><td>" + i.etternavn + "</td>" +
                 "<td>" + i.telefonnr + "</td><td>" + i.epost + "</td>" +
-                "<td> <button onClick='slettBillett("+ i.billettId +")'>Slett Billett</button></td>" +
+                "<td>" +
+                "<button onClick='endreBillett("+ i.billettId +")'>Endre Billett</button>" +
+                "<button onClick='slettBillett("+ i.billettId +")'>Slett Billett</button>" +
+                "</td>" +
                 "</tr>"
             );
         }
@@ -162,7 +210,7 @@ function printBillettArray() {
 }
 
 function fyllSkjema() {
-    $('#film').val("Lord of the Shrimp");
+    $('#filmSelect').val(2);
     $('#antall').val("1");
     $('#fornavn').val("abc");
     $('#etternavn').val("def");

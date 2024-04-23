@@ -22,10 +22,28 @@ public class BillettRepository {
         );
     }
 
+    public void oppdaterBillett(int billettId, Billett billett) {
+        String sql = "update billett " +
+                "set film = " + billett.getFilm() + " , " +
+                "antall = " + billett.getAntall() + " , " +
+                "fornavn = '" + billett.getFornavn() + "' , " +
+                "etternavn = '" + billett.getEtternavn() + "' , " +
+                "telefonnr = " + billett.getTelefonnr() + " , " +
+                "epost = '" + billett.getEpost() + "' " +
+                "where billettId = " + billettId;
+        db.update(sql);
+    }
+
     public List<Billett> hentAlleBilletter() {
         String sql = "select * from billett order by etternavn";
         List<Billett> alleBilletter = db.query(sql, new BeanPropertyRowMapper<>(Billett.class));
         return alleBilletter;
+    }
+
+    public Billett hentBillett(int billettId) {
+        String sql = "select * from billett where billettId = " + billettId;
+        Billett billett = db.queryForObject(sql, new BeanPropertyRowMapper<>(Billett.class));
+        return billett;
     }
 
     public void slettAlleBilletter() {

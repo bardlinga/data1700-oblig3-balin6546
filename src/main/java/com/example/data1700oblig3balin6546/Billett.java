@@ -11,7 +11,7 @@ import lombok.Setter;
 
 public class Billett {
     private @Setter int billettId;
-    private @Setter String film;
+    private @Setter int film;
     private @Setter int antall;
     private @Setter String fornavn;
     private @Setter String etternavn;
