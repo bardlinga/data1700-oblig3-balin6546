@@ -1,36 +1,38 @@
 <h1>DATA1700 - Oblig3 - balin6546</h1>
 
+<h2>Details:</h2>
 Student ID: balin6546
-<br>
-Course : DATA1700
 <br>
 Assignment: Oblig 3
 <br>
-Submission date: //TODO
+Course : DATA1700 at OsloMet
+<br>
+Submission date: 24.04.24
+<br>
+Repository URL: https://github.com/bardlinga/data1700-oblig3-balin6546
+<br>
+Video demonstration: https://youtu.be/IKJTVP5RHeI
 
-
-This is a small spring boot web app that simulates a movie ticket ordering system, using h2
-in-memory database to store the tickets.
+<h2>Description:</h2>
+This is a small spring boot web app that simulates a movie ticket ordering system using a h2
+in-memory database to store and handle the tickets. Frontend is HTML, JS and CSS and the 
+application communicates with the backend through Java using JDBC.
 
 <h2>Features:</h2>
 - Real-time input validation with error messages upon changing inputs or trying to create a
-new ticket.
-- A button to auto fill the whole form with dummy info for testing purposes
+new ticket.<br>
+- A button to autofill the whole form with dummy info for testing purposes.<br>
 - Edit and delete buttons for individual tickets in the ticket list. The edit button sends
 all of the ticket info to the form, disables the buy button and creates two new buttons to
-save or cancel changes. Buttons are reset upon saving changes or cancelling.
-- Delete button that removes all tickets.
+save or cancel changes. Buttons are reset upon saving changes or cancelling.<br>
+- Delete button that removes all tickets.<br>
 - Ticket and movie lists are stored in the database, and all changes, edits and deletes are
-done in backend before the frontend is updated.
+done in backend before the frontend is updated.<br>
 
-<h2>Links:</h2>
+<h2>Previous versions</h2>
 
-Youtube demo:
-<br>
-//TODO
+Previous versions are provided for the full commit history
 
-Oblig 1 and 2 repos for full commit history:
+Oblig 1: https://github.com/bardlinga/data1700-oblig1-balin6546
 <br>
-https://github.com/bardlinga/data1700-oblig1-balin6546
-<br>
-https://github.com/bardlinga/data1700-oblig2-balin6546
+Oblig 2: https://github.com/bardlinga/data1700-oblig2-balin6546

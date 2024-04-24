@@ -67,7 +67,7 @@ function validerInput(id, regExp, feilmelding) {
 }
 
 $(document).ready(function () {
-    $('#filmSelect').change(function () {
+    $('#film').change(function () {
         validerInput("film", regExp.film, feilmelding.film)
     });
     $('#antall').change(function () {
@@ -140,6 +140,7 @@ function endreBillett(billettId) {
             $('#etternavn').val(data.etternavn);
             $('#telefonnr').val(data.telefonnr);
             $('#epost').val(data.epost);
+            validerSkjema();
 
             document.getElementById('kjopKnapp').setAttribute('disabled','');
             $('#oppdaterKnapp').html(
@@ -224,4 +225,5 @@ function fyllSkjema() {
     $('#etternavn').val("def");
     $('#telefonnr').val("123");
     $('#epost').val("abc@def");
+    validerSkjema();
 }
