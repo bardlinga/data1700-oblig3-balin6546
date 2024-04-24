@@ -1,3 +1,5 @@
+// movie list and info functions --------------------------------------------------------------------------------------
+
 $(document).ready(function () {
     hentAlleFilmer();
     printBillettArray();
@@ -24,7 +26,7 @@ function hentFilmTittel(filmId) {
     })
 }
 
-// error message functions ------------------------------------------------------------------------
+// error message functions --------------------------------------------------------------------------------------------
 
 const feilmelding = {
     film: "Du må velge en film",
@@ -89,19 +91,6 @@ $(document).ready(function () {
     });
 });
 
-// ticket creation functions ----------------------------------------------------------
-
-function lagNyBillett() {
-    return {
-        film: $('#filmSelect').val(),
-        antall: $('#antall').val(),
-        fornavn: $('#fornavn').val(),
-        etternavn: $('#etternavn').val(),
-        telefonnr: $('#telefonnr').val(),
-        epost: $('#epost').val()
-    };
-}
-
 function validerSkjema() {
     let inputSjekkArray = [
         validerInput("film", regExp.film, feilmelding.film),
@@ -114,6 +103,19 @@ function validerSkjema() {
     return !inputSjekkArray.includes(false);
 }
 
+// ticket creation functions -------------------------------------------------------------------------------------------
+
+function lagNyBillett() {
+    return {
+        film: $('#filmSelect').val(),
+        antall: $('#antall').val(),
+        fornavn: $('#fornavn').val(),
+        etternavn: $('#etternavn').val(),
+        telefonnr: $('#telefonnr').val(),
+        epost: $('#epost').val()
+    };
+}
+
 function kjopBillett() {
     if (validerSkjema()) {
         let billett = lagNyBillett();
@@ -124,40 +126,7 @@ function kjopBillett() {
     }
 }
 
-function lagreEndretBillett(billettId) {
-    if (validerSkjema()) {
-        let billett = lagNyBillett();
-        $.post("/oppdaterBillett?billettId=" + billettId, billett, function () {
-            printBillettArray();
-        });
-        document.getElementById('bestillingsskjema').reset();
-        document.getElementById('kjopKnapp').removeAttribute("disabled");
-        $('#oppdaterKnapp').html("");
-    }
-}
-
-function avbrytBillettEndring() {
-    document.getElementById('bestillingsskjema').reset();
-    document.getElementById('kjopKnapp').removeAttribute("disabled");
-    $('#oppdaterKnapp').html("");
-}
-
-function slettAlleBilletter() {
-    $.post("slettAlleBilletter", function (){
-        printBillettArray();
-    });
-}
-
-function slettBillett(billettId) {
-    $.ajax({
-        url : "/slettBillett",
-        type : "DELETE",
-        data: { billettId: billettId },
-        success : function (){
-            printBillettArray();
-        }
-    })
-}
+// ticket edit functions -----------------------------------------------------------------------------------------------
 
 function endreBillett(billettId) {
     $.ajax({
@@ -180,7 +149,44 @@ function endreBillett(billettId) {
     })
 }
 
-// ticket array display functions -----------------------------------------------------------------
+function lagreEndretBillett(billettId) {
+    if (validerSkjema()) {
+        let billett = lagNyBillett();
+        $.post("/oppdaterBillett?billettId=" + billettId, billett, function () {
+            printBillettArray();
+        });
+        document.getElementById('bestillingsskjema').reset();
+        document.getElementById('kjopKnapp').removeAttribute("disabled");
+        $('#oppdaterKnapp').html("<br>");
+    }
+}
+
+function avbrytBillettEndring() {
+    document.getElementById('bestillingsskjema').reset();
+    document.getElementById('kjopKnapp').removeAttribute("disabled");
+    $('#oppdaterKnapp').html("<br>");
+}
+
+// ticket delete functions ---------------------------------------------------------------------------------------------
+
+function slettAlleBilletter() {
+    $.post("slettAlleBilletter", function (){
+        printBillettArray();
+    });
+}
+
+function slettBillett(billettId) {
+    $.ajax({
+        url : "/slettBillett",
+        type : "DELETE",
+        data: { billettId: billettId },
+        success : function (){
+            printBillettArray();
+        }
+    })
+}
+
+// ticket display functions --------------------------------------------------------------------------------------------
 
 function printBillettArray() {
     $.get("/hentAlleBilletter", async function (billettArray) {
@@ -208,6 +214,8 @@ function printBillettArray() {
         $('#billettListe').html(printTable);
     })
 }
+
+// dummy info fill function --------------------------------------------------------------------------------------------
 
 function fyllSkjema() {
     $('#filmSelect').val(2);
