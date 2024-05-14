@@ -21,4 +21,13 @@ create table film
     sjanger varchar(255),
     prodAar int,
     primary key (filmId)
-)
+);
+
+drop table if exists bruker;
+
+create table bruker
+(
+    brukernavn varchar(255) not null,
+    passord varchar(255) not null,
+    primary key (brukernavn)
+);

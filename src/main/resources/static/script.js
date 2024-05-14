@@ -3,7 +3,50 @@
 $(document).ready(function () {
     hentAlleFilmer();
     printBillettArray();
+    registerTestUser();
 });
+
+function login(){
+    const credentials = {
+        brukernavn : $("#brukernavn").val(),
+        passord : $("#passord").val()
+    }
+    $.get("/login", credentials, function(loggetInn){
+        if(loggetInn){
+            printBillettArray();
+            $("#brukernavn").val("");
+            $("#passord").val("");
+            alert("login successful");
+        } else {
+            alert("login failed");
+        }
+    });
+}
+
+function logout(){
+    $.get("/logout", function(loggetUt){
+        if(loggetUt){
+            printBillettArray();
+            alert("logout successful");
+        } else {
+            alert("logout failed");
+        }
+    })
+}
+
+function registerTestUser() {
+    const testUser = {
+        brukernavn : "test",
+        passord : "test123"
+    }
+    $.post("/registerTestUser", testUser, function () {
+        console.log("testUser created");
+    })
+        .fail(function(jqXHR){
+            const json = $.parseJSON(jqXHR.responseText);
+            console.log(json.message);
+        });
+}
 
 function hentAlleFilmer() {
     $.get("/hentFilmListe", function (filmer) {
@@ -214,6 +257,9 @@ function printBillettArray() {
         }
         $('#billettListe').html(printTable);
     })
+        .fail(function (){
+            $('#billettListe').html("<span style='color:red'>Du må være logget inn for å se billettlisten</span>");
+        });
 }
 
 // dummy info fill function --------------------------------------------------------------------------------------------

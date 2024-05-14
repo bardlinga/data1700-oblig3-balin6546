@@ -84,6 +84,19 @@
 
     <h2>Alle billetter</h2>
 
+    <table class="table-condensed" id="loginForm">
+        <tr>
+            <td><label for="brukernavn">Brukernavn: </label></td>
+            <td><input type="text" id="brukernavn"></td>
+        </tr>
+        <tr>
+            <td><label for="passord">Passord: </label></td>
+            <td><input type="password" id="passord"></td>
+        </tr>
+    </table>
+    <button type="button" onclick="login()">Logg inn</button>
+    <button type="button" onclick="logout()">Logg ut</button>
+
     <table id="billettListe" class="table"></table> <!-- table is filled by script -->
 
     <button onclick="slettAlleBilletter()"><span class="glyphicon glyphicon-trash"></span> Slett alle billetter</button>
