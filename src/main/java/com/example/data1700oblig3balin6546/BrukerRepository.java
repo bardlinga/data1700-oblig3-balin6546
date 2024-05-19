@@ -30,7 +30,7 @@ public class BrukerRepository {
     public boolean sjekkBrukernavnOgPassord(Bruker innBruker){
         String sql = "select * from bruker where brukernavn = ?";
         Bruker registrertBruker = db.queryForObject(sql, BeanPropertyRowMapper.newInstance(Bruker.class),
-                innBruker.getBrukernavn());
+                innBruker.getBrukernavn()); // TODO error handling for entering username not stored in DB
         if (BCrypt.checkpw(innBruker.getPassord(), registrertBruker.getPassord())){
             logger.info("Password is correct");
             return true;

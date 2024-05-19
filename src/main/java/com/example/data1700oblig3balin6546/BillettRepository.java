@@ -23,6 +23,7 @@ public class BillettRepository {
     }
 
     public void oppdaterBillett(int billettId, Billett billett) {
+        /*
         String sql = "update billett " +
                 "set film = " + billett.getFilm() + " , " +
                 "antall = " + billett.getAntall() + " , " +
@@ -32,6 +33,12 @@ public class BillettRepository {
                 "epost = '" + billett.getEpost() + "' " +
                 "where billettId = " + billettId;
         db.update(sql);
+         */
+        String sql = "update billett " +
+                "set film = ? , antall = ? , fornavn = ? , etternavn = ? , " +
+                "telefonnr = ? , epost = ? where billettId = ?";
+        db.update(sql, billett.getFilm(), billett.getAntall(), billett.getFornavn(), billett.getEtternavn(),
+                billett.getTelefonnr(), billett.getEpost(), billettId);
     }
 
     public List<Billett> hentAlleBilletter() {
